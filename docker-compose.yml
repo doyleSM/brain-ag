@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16.3-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./src/infra/database/script:/docker-entrypoint-initdb.d
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+
+volumes:
+  db-data:
