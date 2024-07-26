@@ -1,15 +1,16 @@
 import BaseUseCase from '../base.use-case';
 import { CreateFarmInputDto } from 'src/application/dto/farm/create-farm.input.dto';
+import { CreateFarmOutputDto } from 'src/application/dto/farm/create-farm.output.dto';
 import { Farm } from 'src/domain/entities/farm';
 import { Farmer } from 'src/domain/entities/farmer';
 import { ConflictError } from 'src/domain/errors/conflict.error';
 import { UnprocessableEntityError } from 'src/domain/errors/unprocessable-entity.error';
 import { UnitOfWork } from 'src/domain/interfaces/unit-of-work';
 
-export class CreateFarmUseCase implements BaseUseCase<CreateFarmInputDto, any> {
+export class CreateFarmUseCase implements BaseUseCase<CreateFarmInputDto, CreateFarmOutputDto> {
   constructor(private uw: UnitOfWork) {}
 
-  async execute(input: CreateFarmInputDto): Promise<any> {
+  async execute(input: CreateFarmInputDto): Promise<CreateFarmOutputDto> {
     try {
       const existingFarmer = await this.uw.farmerRepository.findByCpfCnpj(input.cpfCnpj);
 
@@ -41,6 +42,7 @@ export class CreateFarmUseCase implements BaseUseCase<CreateFarmInputDto, any> {
       await this.uw.farmerRepository.save(farmer);
       await this.uw.farmRepository.save(farm);
       await this.uw.commit();
+      return farm.toJson();
     } catch (error) {
       await this.uw.rollback();
       throw error;
