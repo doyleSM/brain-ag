@@ -1,35 +1,20 @@
 import { HttpStatus } from '@nestjs/common';
 
 const errorMapping = {
-  ConflictError: {
-    statusCode: HttpStatus.CONFLICT,
-    message: (error) => error.message,
-  },
-  UnprocessableEntityError: {
-    statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-    message: (error) => error.message,
-  },
+  ConflictError: HttpStatus.CONFLICT,
+  UnprocessableEntityError: HttpStatus.UNPROCESSABLE_ENTITY,
 };
 
 export function mapErrorToHttpResponse(error: any) {
   const errorType = error.constructor.name;
-  const mapping = errorMapping[errorType];
-
-  if (mapping) {
-    return {
-      statusCode: mapping.statusCode,
-      body: {
-        statusCode: mapping.statusCode,
-        message: mapping.message(error),
-      },
-    };
-  }
+  const statusCode = errorMapping[errorType] || HttpStatus.INTERNAL_SERVER_ERROR;
 
   return {
-    statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+    statusCode: statusCode,
     body: {
-      statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-      message: 'Internal server error',
+      statusCode: statusCode,
+      message: error.messages || [error.message],
+      error: errorType,
     },
   };
 }
