@@ -21,7 +21,7 @@ export class CreateFarmUseCase implements BaseUseCase<CreateFarmInputDto, any> {
       const notFoundCrops = input.crops?.filter((cropId) => !crops.some((crop) => crop.id === cropId));
 
       if (notFoundCrops.length) {
-        throw new UnprocessableEntityError(`Crops not found: ${notFoundCrops.join(', ')}`);
+        throw new UnprocessableEntityError(notFoundCrops.map((cropId) => `Crop with id ${cropId} not found`));
       }
 
       const farm = new Farm(
