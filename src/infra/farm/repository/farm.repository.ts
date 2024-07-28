@@ -1,5 +1,7 @@
 import { Inject, Injectable, Scope } from '@nestjs/common';
+import { Crop } from 'src/domain/entities/crop';
 import { Farm } from 'src/domain/entities/farm';
+import { Farmer } from 'src/domain/entities/farmer';
 import { FarmRepository } from 'src/domain/interfaces/farm.repository';
 import { FarmEntity } from 'src/infra/database/entities/farm.entity';
 import { TransactionManager } from 'src/infra/database/transaction.manager';
@@ -20,20 +22,36 @@ export class FarmRepositoryImpl implements FarmRepository {
   async findById(id: string): Promise<Farm | undefined> {
     const queryRunner = this.transactionManager.dataSource.createQueryRunner();
 
-    const result = await queryRunner.manager.findOneBy(FarmEntity, {
-      id,
+    const result = await queryRunner.manager.findOne(FarmEntity, {
+      where: {
+        id,
+      },
+      relations: ['farmer', 'crops'],
     });
     queryRunner.release();
 
-    return new Farm(
+    if (!result) {
+      return undefined;
+    }
+    const crops = result.crops.map((crop) => {
+      return new Crop(crop.name, crop.id);
+    });
+
+    const farmer = new Farmer(result.farmer.cpfCnpj, result.farmer.name, result.farmer.id);
+
+    const farm = new Farm(
       result.name,
       result.city,
       result.state,
-      result.totalAreaHectares,
-      result.cultivableAreaHectares,
-      result.vegetationAreaHectares,
+      Number(result.totalAreaHectares),
+      Number(result.cultivableAreaHectares),
+      Number(result.vegetationAreaHectares),
       result.id,
     );
+
+    farm.addCrops(crops);
+    farm.farmer = farmer;
+    return farm;
   }
   async findAll(): Promise<Farm[]> {
     const queryRunner = this.transactionManager.dataSource.createQueryRunner();

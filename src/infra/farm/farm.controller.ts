@@ -1,6 +1,8 @@
-import { Body, Controller, Inject, Injectable, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Injectable, Param, Patch, Post } from '@nestjs/common';
 import { CreateFarmUseCase } from 'src/application/usecases/farm/create-farm.use-case';
 import { CreateFarmDto } from './dto/create-farm.input.dto';
+import { UpdateFarmInputDto } from './dto/update-farm.input.dto';
+import { UpdateFarmUseCase } from 'src/application/usecases/farm/update-farm.use-case';
 
 @Injectable()
 @Controller({
@@ -10,10 +12,21 @@ export class FarmController {
   constructor(
     @Inject('CREATE_FARM_USE_CASE')
     private readonly createFarmUseCase: CreateFarmUseCase,
+
+    @Inject('UPDATE_FARM_USE_CASE')
+    private readonly updateFarmUseCase: UpdateFarmUseCase,
   ) {}
 
   @Post('/')
   async create(@Body() createFarmDto: CreateFarmDto) {
     return this.createFarmUseCase.execute(createFarmDto);
+  }
+
+  @Patch('/:farmId')
+  async update(@Param('farmId') farmId: string, @Body() updateFarmInputDto: UpdateFarmInputDto) {
+    return this.updateFarmUseCase.execute({
+      farmId,
+      input: updateFarmInputDto,
+    });
   }
 }
