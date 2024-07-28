@@ -74,7 +74,7 @@ export class Farm extends BaseEntity {
 
   set totalAreaHectares(value: number) {
     if (value < 0 || value < this._cultivableAreaHectares + this._vegetationAreaHectares) {
-      throw new ValidationError('Invalid total area');
+      throw new ValidationError('Total area cannot be negative and must be greater than the sum of cultivable and vegetation area');
     }
     this._totalAreaHectares = value;
   }
@@ -85,7 +85,7 @@ export class Farm extends BaseEntity {
 
   set cultivableAreaHectares(value: number) {
     if (value < 0 || value + this._vegetationAreaHectares > this._totalAreaHectares) {
-      throw new ValidationError('Invalid agricultural area');
+      throw new ValidationError('Agricultural area cannot be negative and the sum with vegetation area cannot be greater than total area');
     }
     this._cultivableAreaHectares = value;
   }
@@ -96,7 +96,7 @@ export class Farm extends BaseEntity {
 
   set vegetationAreaHectares(value: number) {
     if (value < 0 || this._cultivableAreaHectares + value > this._totalAreaHectares) {
-      throw new ValidationError('Invalid vegetation area');
+      throw new ValidationError('Vegetation area cannot be negative and the sum with agricultural area cannot be greater than total area');
     }
     this._vegetationAreaHectares = value;
   }
