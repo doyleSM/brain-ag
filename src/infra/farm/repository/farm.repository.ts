@@ -15,8 +15,7 @@ export class FarmRepositoryImpl implements FarmRepository {
 
   async save(farm: Farm): Promise<void> {
     const queryRunner = await this.transactionManager.getQueryRunner();
-    const result = await queryRunner.manager.save(FarmEntity, farm.toJson());
-    console.log(result);
+    await queryRunner.manager.save(FarmEntity, farm.toJson());
   }
 
   async findById(id: string): Promise<Farm | undefined> {

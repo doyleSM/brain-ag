@@ -21,8 +21,7 @@ export class CropRepositoryImpl implements CropRepository {
 
   async save(crop: Crop): Promise<void> {
     const queryRunner = await this.transactionManager.getQueryRunner();
-    const result = await queryRunner.manager.save(CropEntity, crop);
-    console.log(result);
+    await queryRunner.manager.save(CropEntity, crop);
   }
 
   async findById(id: string): Promise<Crop | undefined> {

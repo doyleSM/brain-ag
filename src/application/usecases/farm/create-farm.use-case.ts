@@ -20,7 +20,6 @@ export class CreateFarmUseCase implements BaseUseCase<CreateFarmInputDto, Create
 
       const crops = await this.uw.cropRepository.findByIds(input.crops);
       const notFoundCrops = input.crops?.filter((cropId) => !crops.some((crop) => crop.id === cropId));
-
       if (notFoundCrops.length) {
         throw new UnprocessableEntityError(notFoundCrops.map((cropId) => `Crop with id ${cropId} not found`));
       }

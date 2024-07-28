@@ -12,10 +12,6 @@ export class Crop extends BaseEntity {
     return this._name;
   }
 
-  set name(value: string) {
-    this._name = value;
-  }
-
   toJson() {
     return {
       id: this.id,

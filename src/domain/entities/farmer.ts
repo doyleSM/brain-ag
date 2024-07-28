@@ -1,3 +1,4 @@
+import { ValidationError } from '../errors/validation.error';
 import { BaseEntity } from './base';
 
 export class Farmer extends BaseEntity {
@@ -7,7 +8,7 @@ export class Farmer extends BaseEntity {
   constructor(cpfCnpj: string, name: string, id?: string) {
     super(id);
     this._cpfCnpj = cpfCnpj;
-    this._name = name;
+    this.name = name;
   }
 
   get cpfCnpj(): string {
@@ -24,7 +25,7 @@ export class Farmer extends BaseEntity {
 
   set name(value: string) {
     if (!value || value.trim().length === 0) {
-      throw new Error('Name cannot be empty');
+      throw new ValidationError('Name cannot be empty');
     }
     this._name = value;
   }

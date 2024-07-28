@@ -23,16 +23,12 @@ export class Farm extends BaseEntity {
     id?: string,
   ) {
     super(id);
-    this._name = name;
-    this._city = city;
-    this._state = state;
-    this._totalAreaHectares = totalAreaHectares;
-    this._cultivableAreaHectares = cultivableAreaHectares;
-    this._vegetationAreaHectares = vegetationAreaHectares;
-
-    if (cultivableAreaHectares + vegetationAreaHectares > totalAreaHectares) {
-      throw new ValidationError('Agricultural and vegetation area cannot be greater than total area');
-    }
+    this.name = name;
+    this.city = city;
+    this.state = state;
+    this.totalAreaHectares = totalAreaHectares;
+    this.cultivableAreaHectares = cultivableAreaHectares;
+    this.vegetationAreaHectares = vegetationAreaHectares;
   }
 
   get name(): string {

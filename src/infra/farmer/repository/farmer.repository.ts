@@ -13,8 +13,7 @@ export class FarmerRepositoryImpl implements FarmerRepository {
 
   async save(farmer: Farmer): Promise<void> {
     const queryRunner = await this.transactionManager.getQueryRunner();
-    const result = await queryRunner.manager.save(FarmerEntity, farmer.toJson());
-    console.log(result);
+    await queryRunner.manager.save(FarmerEntity, farmer.toJson());
   }
 
   async findById(id: string): Promise<Farmer | undefined> {
