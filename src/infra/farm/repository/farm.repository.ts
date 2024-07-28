@@ -52,18 +52,4 @@ export class FarmRepositoryImpl implements FarmRepository {
     farm.farmer = farmer;
     return farm;
   }
-  async findAll(): Promise<Farm[]> {
-    const queryRunner = this.transactionManager.dataSource.createQueryRunner();
-
-    const result = await queryRunner.manager.find(FarmEntity);
-    queryRunner.release();
-    return result.map((farm) => {
-      return new Farm(farm.name, farm.city, farm.state, farm.totalAreaHectares, farm.cultivableAreaHectares, farm.vegetationAreaHectares, farm.id);
-    });
-  }
-  async delete(id: string): Promise<void> {
-    const queryRunner = await this.transactionManager.getQueryRunner();
-
-    await queryRunner.manager.delete(FarmEntity, id);
-  }
 }

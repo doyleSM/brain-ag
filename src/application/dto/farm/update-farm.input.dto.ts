@@ -1,4 +1,4 @@
-export class UpdateFarmInputDto {
+export class UpdatFarmInputDto {
   cpfCnpj?: string;
   farmerName?: string;
   farmName?: string;

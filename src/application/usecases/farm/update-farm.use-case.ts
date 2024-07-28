@@ -4,12 +4,12 @@ import { UnprocessableEntityError } from 'src/domain/errors/unprocessable-entity
 import { UnitOfWork } from 'src/domain/interfaces/unit-of-work';
 import BaseUseCase from '../base.use-case';
 import { NotFoundError } from 'src/domain/errors/not-found.error';
-import { UpdateFarmInputDto } from 'src/application/dto/farm/update-farm.input.dto';
+import { UpdatFarmInputDto } from 'src/application/dto/farm/update-farm.input.dto';
 import { UpdateFarmOutputDto } from 'src/application/dto/farm/update-farm.output.dto';
 
 type Payload = {
   farmId: string;
-  input: UpdateFarmInputDto;
+  input: UpdatFarmInputDto;
 };
 
 export class UpdateFarmUseCase implements BaseUseCase<Payload, UpdateFarmOutputDto> {

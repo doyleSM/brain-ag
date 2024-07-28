@@ -24,22 +24,10 @@ export class CropRepositoryImpl implements CropRepository {
     await queryRunner.manager.save(CropEntity, crop);
   }
 
-  async findById(id: string): Promise<Crop | undefined> {
-    const queryRunner = this.transactionManager.dataSource.createQueryRunner();
-    const result = await queryRunner.manager.findOneBy(CropEntity, { id });
-    queryRunner.release();
-    return result ? new Crop(result.name, result.id) : undefined;
-  }
-
   async findAll(): Promise<Crop[]> {
     const queryRunner = this.transactionManager.dataSource.createQueryRunner();
     const result = await queryRunner.manager.find(CropEntity);
     queryRunner.release();
     return result.map((crop) => new Crop(crop.name, crop.id));
-  }
-
-  async delete(id: string): Promise<void> {
-    const queryRunner = await this.transactionManager.getQueryRunner();
-    await queryRunner.manager.delete(CropEntity, id);
   }
 }
