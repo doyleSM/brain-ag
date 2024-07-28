@@ -3,6 +3,8 @@ import { HttpStatus } from '@nestjs/common';
 const errorMapping = {
   ConflictError: HttpStatus.CONFLICT,
   UnprocessableEntityError: HttpStatus.UNPROCESSABLE_ENTITY,
+  ValidationError: HttpStatus.BAD_REQUEST,
+  NotFoundError: HttpStatus.NOT_FOUND,
 };
 
 export function mapErrorToHttpResponse(error: any) {

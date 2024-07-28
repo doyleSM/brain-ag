@@ -1,3 +1,4 @@
+import { ValidationError } from '../errors/validation.error';
 import { BaseEntity } from './base';
 import { Crop } from './crop';
 import { Farmer } from './farmer';
@@ -30,7 +31,7 @@ export class Farm extends BaseEntity {
     this._vegetationAreaHectares = vegetationAreaHectares;
 
     if (cultivableAreaHectares + vegetationAreaHectares > totalAreaHectares) {
-      throw new Error('Agricultural and vegetation area cannot be greater than total area');
+      throw new ValidationError('Agricultural and vegetation area cannot be greater than total area');
     }
   }
 
@@ -40,7 +41,7 @@ export class Farm extends BaseEntity {
 
   set name(value: string) {
     if (!value || value.trim().length === 0) {
-      throw new Error('Name cannot be empty');
+      throw new ValidationError('Name cannot be empty');
     }
     this._name = value;
   }
@@ -51,7 +52,7 @@ export class Farm extends BaseEntity {
 
   set city(value: string) {
     if (!value || value.trim().length === 0) {
-      throw new Error('City cannot be empty');
+      throw new ValidationError('City cannot be empty');
     }
     this._city = value;
   }
@@ -62,7 +63,7 @@ export class Farm extends BaseEntity {
 
   set state(value: string) {
     if (!value || value.trim().length === 0) {
-      throw new Error('State cannot be empty');
+      throw new ValidationError('State cannot be empty');
     }
     this._state = value;
   }
@@ -71,13 +72,20 @@ export class Farm extends BaseEntity {
     return this._totalAreaHectares;
   }
 
+  set totalAreaHectares(value: number) {
+    if (value < 0 || value < this._cultivableAreaHectares + this._vegetationAreaHectares) {
+      throw new ValidationError('Invalid total area');
+    }
+    this._totalAreaHectares = value;
+  }
+
   get cultivableAreaHectares(): number {
     return this._cultivableAreaHectares;
   }
 
   set cultivableAreaHectares(value: number) {
     if (value < 0 || value + this._vegetationAreaHectares > this._totalAreaHectares) {
-      throw new Error('Invalid agricultural area');
+      throw new ValidationError('Invalid agricultural area');
     }
     this._cultivableAreaHectares = value;
   }
@@ -88,7 +96,7 @@ export class Farm extends BaseEntity {
 
   set vegetationAreaHectares(value: number) {
     if (value < 0 || this._cultivableAreaHectares + value > this._totalAreaHectares) {
-      throw new Error('Invalid vegetation area');
+      throw new ValidationError('Invalid vegetation area');
     }
     this._vegetationAreaHectares = value;
   }
@@ -109,12 +117,17 @@ export class Farm extends BaseEntity {
     this._crops.push(...crops);
   }
 
-  removeCulture(culture: Crop): void {
-    const index = this._crops.indexOf(culture);
+  removeCrop(crop: Crop): void {
+    const index = this._crops.indexOf(crop);
     if (index > -1) {
       this._crops.splice(index, 1);
     }
   }
+
+  removeCrops(crops: Crop[]): void {
+    crops.forEach((crop) => this.removeCrop(crop));
+  }
+
   toJson() {
     return {
       id: this.id,
