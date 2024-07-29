@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryColumn, ManyToMany, JoinTable, OneToOne, JoinCol
 import { CropEntity } from './crop.entity';
 import { FarmerEntity } from './farmer.entity';
 
-@Entity({ name: 'farm' })
+@Entity({ name: 'farms' })
 export class FarmEntity {
   @PrimaryColumn({
     nullable: false,
@@ -64,7 +64,7 @@ export class FarmEntity {
 
   @ManyToMany(() => CropEntity)
   @JoinTable({
-    name: 'farm_crop',
+    name: 'farms_crops',
     joinColumn: {
       name: 'farm_id',
       referencedColumnName: 'id',
