@@ -3,10 +3,10 @@ import { UnitOfWorkImpl } from './unit-of-work.repository';
 import { CropRepositoryImpl } from '../crop/repository/crop.repository';
 import { FarmerRepositoryImpl } from '../farmer/repository/farmer.repository';
 import { FarmRepositoryImpl } from '../farm/repository/farm.repository';
-import { testDatabaseProviders } from './factories/database.memory.provider';
+import { databaseProviders } from './factories/database.provider';
 
 @Module({
-  providers: [...testDatabaseProviders, UnitOfWorkImpl, CropRepositoryImpl, FarmerRepositoryImpl, FarmRepositoryImpl],
-  exports: [...testDatabaseProviders, UnitOfWorkImpl],
+  providers: [...databaseProviders, UnitOfWorkImpl, CropRepositoryImpl, FarmerRepositoryImpl, FarmRepositoryImpl],
+  exports: [...databaseProviders, UnitOfWorkImpl],
 })
 export class DatabaseModule {}

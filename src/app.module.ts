@@ -6,6 +6,7 @@ import { CropModule } from './infra/crop/crop.module';
 import { FarmModule } from './infra/farm/farm.module';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from './infra/filter/exception.filter';
+import { DashboardModule } from './infra/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AllExceptionsFilter } from './infra/filter/exception.filter';
     FarmerModule,
     CropModule,
     FarmModule,
+    DashboardModule,
   ],
   controllers: [],
   providers: [
