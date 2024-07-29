@@ -184,7 +184,6 @@ describe('FarmController (e2e)', () => {
         cpfCnpj: '24468715006',
         crops: ['4362f0c7-fc53-496c-95c9-130f4b8eac25'],
       });
-    console.log(response.body);
 
     const responsePatch = await request(app.getHttpServer())
       .patch(`/farms/${response.body.id}`)
