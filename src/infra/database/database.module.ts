@@ -7,7 +7,6 @@ import { databaseProviders } from './factories/database.provider';
 import { testDatabaseProviders } from './factories/database.memory.provider';
 
 const isTestEnvironment = process.env.NODE_ENV === 'test';
-console.log(isTestEnvironment ? 'Running tests' : 'Running application');
 const dbProviders = isTestEnvironment ? testDatabaseProviders : databaseProviders;
 
 @Module({

@@ -11,6 +11,24 @@ services:
       - ./src/infra/database/script:/docker-entrypoint-initdb.d
     ports:
       - "${DB_PORT}:${DB_PORT}"
-
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs_app
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
 volumes:
   db-data:

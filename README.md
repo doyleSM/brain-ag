@@ -1,73 +1,39 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# README
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Descrição
+A aplicação foi desenvolvida utilizando Node.js na versão `v20.15.1` e o framework `NestJS`. Existem 3 camadas principais: Domain, Application e Infra, seguindo os princípios de arquitetura limpa, sem dependências das camadas externas e bibliotecas externas, etc., nas camadas internas. Não sou purista, deixo controllers e afins "sujos" intencionalmente para aproveitar o poder do NestJS.
 
-## Description
+Pensando em minimizar o número de requisições e também para não deixar o banco de dados com inconsistências, como produtores rurais sem fazenda, optei por inserções e remoções nested, utilizando transações para garantir a consistência.
+O Mesmo serve para o Dashboard, mas como estou utilizando usecases e cara dash tem sua propria chamada, facilmente podemos criar uma rota para cada.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Testes
+A aplicação conta com testes unitários e de integração. Para os testes unitários, foi utilizado Jest e jest-mock-extended.
 
-## Installation
+Para testes de integração, utilizei pg-mem para rodar o banco em memória e o poder do NestJS para subir toda a aplicação e apenas trocar o database provider para o in-memory.
 
-```bash
-$ npm install
+Para executar os testes:
+1. `npm install`
+2. `npm run test`
+3. Para coverage: `npm run test:cov`
+
+![Alt Text](./tests.gif)
+
+## Rodando localmente
+A aplicação utiliza o Docker Compose para gerenciar os serviços necessários. Siga os passos abaixo para rodar a aplicação:
+
+### 1. Configuração do Banco de Dados:
+O Docker Compose irá subir um container com o PostgreSQL. O script de criação do banco de dados será executado automaticamente durante a criação do container. Além disso, um script para inserção de dados de exemplo também será executado.
+
+### 2. Variáveis de Ambiente:
+O Docker Compose está configurado para utilizar um arquivo `.env` para obter as variáveis de ambiente necessárias. Certifique-se de que o arquivo `.env` está corretamente configurado com as variáveis de ambiente necessárias antes de iniciar a aplicação.
+
+### 3. Executando a Aplicação:
+Após subir os containers, a aplicação estará disponível em: [http://localhost:3000/api](http://localhost:3000/api)
+
+Para rodar a aplicação, basta seguir os comandos abaixo no terminal:
+```sh
+docker compose --env-file .env up
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Uma collection exemplo para o Insomnia está em anexo.
