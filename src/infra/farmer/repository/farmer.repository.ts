@@ -10,6 +10,10 @@ export class FarmerRepositoryImpl implements FarmerRepository {
     @Inject('TRANSACTION_MANAGER')
     private readonly transactionManager: TransactionManager,
   ) {}
+  async delete(farmer: Farmer): Promise<void> {
+    const queryRunner = await this.transactionManager.getQueryRunner();
+    await queryRunner.manager.delete(FarmerEntity, farmer.id);
+  }
 
   async save(farmer: Farmer): Promise<void> {
     const queryRunner = await this.transactionManager.getQueryRunner();
@@ -20,6 +24,5 @@ export class FarmerRepositoryImpl implements FarmerRepository {
     const queryRunner = this.transactionManager.dataSource.createQueryRunner();
     const result = await queryRunner.manager.findOneBy(FarmerEntity, { cpfCnpj });
     return result ? new Farmer(result.cpfCnpj, result.name, result.id) : undefined;
-    // queryRunner.release();
   }
 }

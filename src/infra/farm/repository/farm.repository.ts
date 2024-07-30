@@ -13,6 +13,11 @@ export class FarmRepositoryImpl implements FarmRepository {
     private readonly transactionManager: TransactionManager,
   ) {}
 
+  async delete(farm: Farm): Promise<void> {
+    const queryRunner = await this.transactionManager.getQueryRunner();
+    await queryRunner.manager.remove(FarmEntity, farm.toJson());
+  }
+
   async save(farm: Farm): Promise<void> {
     const queryRunner = await this.transactionManager.getQueryRunner();
     await queryRunner.manager.save(FarmEntity, farm.toJson());
