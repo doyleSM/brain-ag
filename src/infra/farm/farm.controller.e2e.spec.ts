@@ -217,4 +217,26 @@ describe('FarmController (e2e)', () => {
     expect(responsePatch.status).toEqual(400);
     expect(responsePatch.body.message).toEqual(['CPF or CNPJ is invalid']);
   });
+
+  it('farms/:id (DELETE)', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/farms')
+      .send({
+        farmerName: 'Farmer 1',
+        farmName: 'Farm 1',
+        city: 'City 1',
+        state: 'RS',
+        totalAreaHectares: 100,
+        cultivableAreaHectares: 50,
+        vegetationAreaHectares: 50,
+        cpfCnpj: '24468715006',
+        crops: ['4362f0c7-fc53-496c-95c9-130f4b8eac25'],
+      });
+
+    const responseDelete = await request(app.getHttpServer()).delete(`/farms/${response.body.id}`);
+    expect(responseDelete.status).toEqual(200);
+
+    const responseDelete2 = await request(app.getHttpServer()).delete(`/farms/${response.body.id}`);
+    expect(responseDelete2.status).toEqual(404);
+  });
 });
