@@ -28,11 +28,13 @@ export class DashboardController {
 
   @Get('/')
   async nested() {
-    const totalArea = await this.getTotalAreaUseCase.execute();
-    const totalFarmsByCrop = await this.getTotalFarmsByCropUseCase.execute();
-    const totalFarmsByState = await this.getTotalFarmsByStateUseCase.execute();
-    const totalFarms = await this.getTotalFarmsUseCase.execute();
-    const totalLandUse = await this.getTotalLandUseUseCase.execute();
+    const [totalArea, totalFarmsByCrop, totalFarmsByState, totalFarms, totalLandUse] = await Promise.all([
+      this.getTotalAreaUseCase.execute(),
+      this.getTotalFarmsByCropUseCase.execute(),
+      this.getTotalFarmsByStateUseCase.execute(),
+      this.getTotalFarmsUseCase.execute(),
+      this.getTotalLandUseUseCase.execute(),
+    ]);
     return {
       ...totalArea,
       totalFarmsByCrop,

@@ -11,4 +11,5 @@ module.exports = {
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/$1',
   },
+  setupFiles: ['<rootDir>/../test/setup.ts'],
 };

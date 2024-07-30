@@ -9,7 +9,7 @@ describe('CropController (e2e)', () => {
   let app: INestApplication;
   let crops: Crop[];
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();

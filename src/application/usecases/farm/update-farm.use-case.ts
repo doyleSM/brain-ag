@@ -4,7 +4,7 @@ import { UnprocessableEntityError } from 'src/domain/errors/unprocessable-entity
 import { UnitOfWork } from 'src/domain/interfaces/unit-of-work';
 import BaseUseCase from '../base.use-case';
 import { NotFoundError } from 'src/domain/errors/not-found.error';
-import { UpdatFarmInputDto } from 'src/application/dto/farm/update-farm.input.dto';
+import { UpdatFarmInputDto } from 'src/application/dto/farm/updat-farm.input.dto';
 import { UpdateFarmOutputDto } from 'src/application/dto/farm/update-farm.output.dto';
 
 type Payload = {
