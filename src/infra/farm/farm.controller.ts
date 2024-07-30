@@ -3,7 +3,7 @@ import { CreateFarmUseCase } from 'src/application/usecases/farm/create-farm.use
 import { CreateFarmDto } from './dto/create-farm.input.dto';
 import { UpdateFarmInputDto } from './dto/update-farm.input.dto';
 import { UpdateFarmUseCase } from 'src/application/usecases/farm/update-farm.use-case';
-import { DeleteFarmUseCase } from 'src/application/usecases/farm/delete-farm-use-case.spec';
+import { DeleteFarmUseCase } from 'src/application/usecases/farm/delete-farm-use-case';
 
 @Injectable()
 @Controller({
